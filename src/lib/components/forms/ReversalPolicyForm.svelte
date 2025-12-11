@@ -86,9 +86,9 @@
 
 	{#if reversalPolicyType === 'tiered'}
 		<div class="space-y-3">
-			<label class="block text-sm font-medium mb-2">
+			<div class="block text-sm font-medium mb-2">
 				Paliers de Reversement (si bénéfice net ≥ seuil, alors reverser montant)
-			</label>
+			</div>
 			{#each reversalTiers as tier, index (index)}
 				<div class="flex flex-col sm:flex-row gap-3 p-3 bg-white rounded-lg border border-gray-300">
 					<div class="flex-1">
