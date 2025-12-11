@@ -4,36 +4,72 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-		<!-- SEO essentials -->
-		<title>Holdify — Simulation professionnelle de flux financiers entre holding et filiale</title>
-		<meta name="description" content="Holdify : Outil SvelteKit pour simuler, analyser les flux financiers & fiscaux holding-filiale. Visualisation, exports, fiscalité, multi-actionnaires. Rapide & ergonomique." />
-		<meta name="keywords" content="simulation financier, holding, filiale, fiscalité, IS, dividendes, SvelteKit, export PDF, analyse, business angel, gestion entreprise" />
+		<!-- SEO Global / Essentials -->
+		<title>Holdify - Simulation Économique Holding ↔ Filiale</title>
+		<meta name="description" content="Outil de simulation économique pour analyser les flux financiers entre une holding et sa filiale. Calculez l'IS, les dividendes, le PFU et visualisez l'évolution des capitaux avec des graphiques interactifs." />
+		<meta name="keywords" content="holding, filiale, simulation économique, IS, impôt sur les sociétés, dividendes, PFU, prélèvement forfaitaire unique, fiscalité, gestion financière, calcul fiscal, simulation financier, export PDF, business angel, gestion entreprise" />
 		<meta name="author" content="Holdify" />
 		<meta name="robots" content="index, follow" />
+		<meta name="language" content="French" />
+		<link rel="canonical" href="https://holdify.pelsy.net/" />
 		<link rel="icon" href="/src/lib/assets/favicon_white.png" type="image/png">
 		<link rel="shortcut icon" href="/src/lib/assets/favicon_white.png" type="image/png">
 
 		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website" />
-		<meta property="og:locale" content="fr_FR" />
 		<meta property="og:url" content="https://holdify.pelsy.net/" />
-		<meta property="og:title" content="Holdify — Simulation financière Holding/Filiale" />
-		<meta property="og:description" content="Simulez vos flux financiers et fiscaux entre une société holding et sa filiale. Visualisez profits, reversements, IS, dividendes et plus. Outil pro, rapide et ergonomique." />
+		<meta property="og:title" content="Holdify - Simulation Économique Holding ↔ Filiale" />
+		<meta property="og:description" content="Outil de simulation économique pour analyser les flux financiers entre une holding et sa filiale. Calculez l'IS, les dividendes, le PFU et visualisez l'évolution des capitaux." />
 		<meta property="og:image" content="https://holdify.pelsy.net/favicon_white.png" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
 		<meta property="og:image:alt" content="Logo Holdify - Simulation Flux Holding Filiale" />
+		<meta property="og:locale" content="fr_FR" />
 		<meta property="og:site_name" content="Holdify" />
 
 		<!-- Twitter / X Card -->
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@holdify_app" />
-		<meta name="twitter:title" content="Holdify — Simulation financière Holding/Filiale" />
-		<meta name="twitter:description" content="Outil de simulation professionnelle des flux entre holding et filiale : profits, reversements, fiscalité, actionnaires, exports." />
+		<meta name="twitter:url" content="https://holdify.pelsy.net/" />
+		<meta name="twitter:title" content="Holdify - Simulation Économique Holding ↔ Filiale" />
+		<meta name="twitter:description" content="Outil de simulation économique pour analyser les flux financiers entre une holding et sa filiale. Calculez l'IS, les dividendes, le PFU et visualisez l'évolution des capitaux." />
 		<meta name="twitter:image" content="https://holdify.pelsy.net/favicon_white.png" />
 		<meta name="twitter:image:alt" content="Logo Holdify, Simulation Finances Holding Filiale" />
 
 		<!-- Manifest / theme color for mobile -->
 		<link rel="manifest" href="/manifest.webmanifest">
 		<meta name="theme-color" content="#151515" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="apple-mobile-web-app-title" content="Holdify" />
+
+		<!-- JSON-LD Schema.org structured SEO -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "WebApplication",
+			"name": "Holdify",
+			"description": "Outil de simulation économique pour analyser les flux financiers entre une holding et sa filiale",
+			"url": "https://holdify.pelsy.net/",
+			"applicationCategory": "FinanceApplication",
+			"operatingSystem": "Web",
+			"offers": {
+				"@type": "Offer",
+				"price": "0",
+				"priceCurrency": "EUR"
+			},
+			"featureList": [
+				"Simulation économique mois par mois",
+				"Calcul de l'Impôt sur les Sociétés (IS)",
+				"Calcul des dividendes et du PFU",
+				"Visualisations graphiques interactives",
+				"Export CSV / PDF des résultats",
+				"Multi-actionnaires",
+				"Barèmes et seuils fiscaux configurables"
+			]
+		}
+		</script>
 
 		%sveltekit.head%
 	</head>
