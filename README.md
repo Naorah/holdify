@@ -1,89 +1,94 @@
-# Holdify - Simulation Économique Holding et Filiale
+<p align="center">
+  <img src="https://holdify.app/logo.svg" alt="Holdify logo" width="120" height="120">
+</p>
+
+<h1 align="center">Holdify</h1>
+<p align="center"><em>Simulation professionnelle des flux financiers entre holding et filiale</em></p>
+
+---
 
 ## Présentation
 
-Holdify est un outil de démonstration développé avec SvelteKit 5 et TypeScript qui permet de simuler les flux financiers entre une société holding et sa filiale. L'application facilite l'analyse de l'impact des décisions fiscales et financières sur une période donnée.
+**Holdify** est un outil de simulation avancé développé avec SvelteKit 5 et TypeScript, conçu pour modéliser et analyser les flux financiers et fiscaux entre une société holding et sa filiale. Cet outil s'adresse aux professionnels de la finance, de la gestion d'entreprise, aux business angels, ou encore aux entrepreneurs souhaitant explorer l'impact des différentes politiques financières et fiscales sur leurs structures d'investissement.
 
-Dans ce modèle, la holding génère les profits, paie l'impôt sur les sociétés, distribue des dividendes à ses actionnaires et peut reverser des fonds à la filiale selon une politique configurable.
+Le modèle intégré permet notamment de :
+- Générer et faire évoluer les profits d'une holding avec prise en compte de la volatilité et de la croissance.
+- Calculer automatiquement l'impôt sur les sociétés selon un barème personnalisable.
+- Disposer de multiples politiques de reversement vers la filiale (aucun, pourcentage, conditionnel, paliers sur bénéfice).
+- Gérer plusieurs actionnaires avec calcul de dividendes personnalisés.
+- Visualiser instantanément les résultats (tableaux, graphiques interactifs).
+- Exporter les données pour analyse ou reporting (CSV, PDF).
 
-### Fonctionnalités principales
+---
 
-- Simulation complète mois par mois avec volatilité et croissance
-- Calculs fiscaux paramétrables (IS de la holding)
-- Gestion des actionnaires avec calcul des dividendes
-- Politique de reversement flexible (aucun, pourcentage, conditionnel, ou par paliers selon le bénéfice)
-- Visualisations graphiques interactives (Chart.js)
-- Tableau détaillé des flux financiers
-- Export CSV et PDF des résultats
-- Interface moderne et responsive (Tailwind CSS, thème monochrome)
-- Architecture modulaire et testable
+## Fonctionnalités Clés
 
-## Installation et Démarrage
+- **Simulation mensuelle détaillée** (profits, capitaux, reversements, dividendes…)
+- **Gestion fiscale avancée** (barème IS progressif paramétrable)
+- **Politique de reversement flexible** : Aucun, pourcentage, conditionnel, par paliers
+- **Multi-actionnaires** : investissements, taux de dividendes
+- **Visualisations interactives** (graphiques Chart.js)
+- **Exports professionnels** (CSV, PDF complet de la page)
+- **Interface responsive, sobre, et ergonomique** (mono-chrome, Tailwind CSS)
+- **Architecture modulaire & typée TypeScript**
+- **Tests unitaires** (Vitest)
+
+---
+
+## Installation et Mise en Route
 
 ### Prérequis
 
-- Node.js 18 ou supérieur
-- npm, pnpm ou yarn
+- Node.js ≥ 18
+- Un gestionnaire de paquets : npm / pnpm / yarn
 
-### Installation des dépendances
+### Installation
 
 ```bash
 npm install
 ```
 
-### Développement
-
-Lancer le serveur de développement :
+### Lancement en développement
 
 ```bash
 npm run dev
 ```
+Application accessible sur [http://localhost:5173](http://localhost:5173)
 
-L'application sera accessible sur `http://localhost:5173` (ou le port indiqué dans la console).
-
-Pour ouvrir automatiquement dans le navigateur :
-
+Pour ouvrir dans le navigateur automatiquement :
 ```bash
 npm run dev -- --open
 ```
 
-### Build de production
+### Production
 
-Créer une version optimisée :
-
+Build optimisé :
 ```bash
 npm run build
 ```
 
-### Prévisualisation du build
-
-Tester la version de production localement :
-
+Prévisualisation locale du build :
 ```bash
 npm run preview
 ```
 
-### Tests unitaires
+### Tests et Types
 
-Lancer les tests :
-
+Lancer la suite de tests unitaires :
 ```bash
 npm test
 ```
-
-Interface de tests interactive :
-
+Interface de tests :
 ```bash
 npm run test:ui
 ```
 
-### Vérification TypeScript
-
-Vérifier les types :
-
+Vérifier la cohérence des types TypeScript :
 ```bash
 npm run check
 ```
+
+---
 
 ## Architecture du Projet
 
@@ -91,221 +96,190 @@ npm run check
 holdify/
 ├── src/
 │   ├── lib/
-│   │   ├── simulator.ts          # Logique de simulation fiscale (cœur métier)
+│   │   ├── simulator.ts          # Moteur de simulation (coeur métier)
 │   │   ├── simulator.test.ts     # Tests unitaires
 │   │   └── charts/
-│   │       └── LineChart.svelte  # Composant wrapper Chart.js réactif
+│   │       └── LineChart.svelte  # Wrapper Chart.js Svelte
 │   ├── routes/
-│   │   ├── +layout.svelte        # Layout principal (inclut Tailwind)
-│   │   └── +page.svelte          # Page principale (formulaire + visualisations)
+│   │   ├── +layout.svelte        # Layout général (Base Tailwind)
+│   │   └── +page.svelte          # Front principal : formulaire, vues, exports
 │   └── styles/
-│       └── tailwind.css          # Styles Tailwind (thème monochrome)
-├── tailwind.config.cjs           # Configuration Tailwind
-├── postcss.config.cjs            # Configuration PostCSS
-├── vite.config.ts                # Configuration Vite avec Vitest
-├── package.json                  # Dépendances et scripts
-└── README.md                     # Ce fichier
+│       └── tailwind.css          # Thème monochrome (noir, blanc, gris)
+├── tailwind.config.cjs           # Config. Tailwind
+├── postcss.config.cjs            # Config. PostCSS
+├── vite.config.ts                # Vite (build, test)
+├── package.json                  # Dépendances, scripts, meta
+└── README.md                     # Présentation
 ```
-
-## Paramètres de Simulation
-
-### Paramètres Financiers
-
-- **Profit Mensuel de Base** : Montant de profit généré par la holding chaque mois (en euros)
-- **Volatilité** : Écart-type en pourcentage (0-50%) pour simuler la variabilité des profits
-- **Taux de Croissance Mensuel** : Croissance exponentielle mensuelle (0-10%)
-
-### Capitaux
-
-- **Capital Initial Filiale** : Capital de départ de la filiale (en euros)
-- **Capital Initial Holding** : Capital de départ de la holding, en plus des investissements des actionnaires (en euros)
-- **Durée** : Nombre de mois à simuler (1-120)
-
-Note : Les investissements des actionnaires sont automatiquement ajoutés au capital initial de la holding lors de la simulation.
-
-### Politique de Reversement
-
-Quatre modes disponibles :
-
-1. **Aucun** : Pas de reversement de la holding vers la filiale
-2. **Pourcentage du Capital Holding** : Reversement d'un pourcentage fixe du capital holding chaque mois
-3. **Conditionnel (seuil capital)** : Reversement d'un montant fixe si le capital holding dépasse un seuil
-4. **Par Paliers (selon bénéfice)** : Reversement selon des paliers basés sur le bénéfice net de la holding
-   - Si bénéfice net ≥ seuil 1, alors reverser montant 1
-   - Si bénéfice net ≥ seuil 2, alors reverser montant 2
-   - Et ainsi de suite (le palier le plus élevé atteint est appliqué)
-
-### Paramètres Actionnaires
-
-Pour chaque actionnaire, vous pouvez configurer :
-
-- **Nom** : Identifiant de l'actionnaire
-- **Investissement** : Montant investi dans la holding (en euros)
-- **Taux de Dividende Annuel** : Pourcentage annuel de dividendes basé sur l'investissement (en décimal, ex: 0.05 pour 5%)
-
-Les dividendes sont calculés mensuellement à partir du profit net de la holding (après IS), proportionnellement à l'investissement de chaque actionnaire.
-
-### Paramètres Fiscaux
-
-#### Impôt sur les Sociétés (IS)
-
-Barème progressif configurable avec jusqu'à 3 tranches :
-
-- **Tranche 1** : Seuil et taux (ex: 0€ à 15%)
-- **Tranche 2** : Seuil et taux (ex: 42 500€ à 25%)
-- **Tranche 3** : Seuil et taux (ex: 500 000€ à 28%)
-
-L'IS est calculé sur le profit brut de la holding selon ce barème progressif.
-
-Note : Les taux PFU (IR + prélèvements sociaux) ne sont plus utilisés dans ce modèle. Les dividendes sont calculés directement depuis le profit net de la holding.
-
-## Résultats de Simulation
-
-### Graphiques
-
-Trois graphiques interactifs sont générés automatiquement :
-
-1. **Évolution des Profits** : Profit brut vs Profit net de la holding
-2. **Dividendes et Reversements** : Dividendes versés aux actionnaires vs Reversements vers la filiale
-3. **Évolution des Capitaux** : Capital filiale vs Capital holding
-
-### Tableau Détaillé
-
-Le tableau affiche pour chaque mois :
-
-- **Profit Brut Holding** : Bénéfice avant IS
-- **IS Payé** : Impôt sur les sociétés payé par la holding
-- **Profit Net Holding** : Profit après IS
-- **Dividendes Actionnaires** : Montant total des dividendes versés aux actionnaires
-- **Reversement → Filiale** : Montant reversé de la holding vers la filiale
-- **Capital Filiale** : Capital final de la filiale
-- **Capital Holding** : Capital final de la holding
-
-### Export des Résultats
-
-Deux options d'export sont disponibles :
-
-- **Export CSV** : Exporte le tableau détaillé dans un fichier CSV pour analyse dans un tableur
-- **Export PDF** : Génère un PDF complet de la page avec tous les résultats et graphiques
-
-## Règles Fiscales et Ajustements
-
-### Où Ajuster les Taux Fiscaux
-
-Les taux fiscaux sont paramétrables et doivent être vérifiés auprès des sources officielles (impots.gouv.fr) avant toute utilisation réelle.
-
-#### Fichier : `src/lib/simulator.ts`
-
-##### Barème IS (lignes 133-138)
-
-```typescript
-export const DEFAULT_IS_BRACKETS: TaxBracket[] = [
-	{ threshold: 0, rate: 0.15 },      // Taux réduit pour les PME
-	{ threshold: 42500, rate: 0.25 },  // Taux intermédiaire
-	{ threshold: 500000, rate: 0.28 }, // Taux standard
-	{ threshold: 5000000, rate: 0.31 }  // Taux majoré
-];
-```
-
-Pour ajuster : Modifiez les valeurs `threshold` (seuils en euros) et `rate` (taux en décimal, ex: 0.15 pour 15%).
-
-##### Paramètres fiscaux par défaut (lignes 145-150)
-
-```typescript
-export const DEFAULT_TAX_PARAMS: TaxParameters = {
-	isBrackets: DEFAULT_IS_BRACKETS,
-	dividendIrRate: 0.128,      // 12.8% - Non utilisé dans le modèle actuel
-	dividendSocialRate: 0.172   // 17.2% - Non utilisé dans le modèle actuel
-};
-```
-
-Note : Les taux `dividendIrRate` et `dividendSocialRate` sont conservés pour compatibilité mais ne sont plus utilisés dans le calcul. Les dividendes sont calculés directement depuis le profit net.
-
-##### Fonction de calcul IS (lignes 165-195)
-
-La fonction `calculateIS()` applique le barème progressif. Elle est déjà paramétrable via les `TaxBracket[]`.
-
-### Logique de Simulation
-
-1. **Génération du profit brut** : La holding génère un profit mensuel avec volatilité et croissance
-2. **Calcul de l'IS** : L'IS est calculé sur le profit brut selon le barème progressif
-3. **Profit net** : Profit brut - IS
-4. **Dividendes actionnaires** : Calculés depuis le profit net, proportionnellement aux investissements et selon les taux annuels configurés
-5. **Reversement filiale** : Calculé selon la politique de reversement (aucun, pourcentage, conditionnel, ou paliers)
-6. **Mise à jour des capitaux** :
-   - Filiale : Capital + Reversement
-   - Holding : Capital + Profit net - Dividendes actionnaires - Reversement filiale
-
-## Tests Unitaires
-
-Les tests unitaires couvrent :
-
-- Calcul de l'IS avec différents barèmes
-- Calcul des dividendes actionnaires
-- Simulation complète avec différentes politiques de reversement
-- Export CSV
-
-Fichier de tests : `src/lib/simulator.test.ts`
-
-## Design et Accessibilité
-
-### Thème
-
-- Couleurs : Noir, blanc, niveaux de gris uniquement (monochrome)
-- Typographie : Police système, tailles adaptatives
-- Responsive : Design adaptatif mobile/tablette/desktop
-
-### Accessibilité
-
-- Labels sur tous les inputs
-- Focus visible pour la navigation au clavier
-- Contrastes respectant WCAG AA
-- Structure sémantique HTML
-
-## Exemple d'Utilisation
-
-### Configuration Réaliste pour 12 Mois
-
-1. **Profit Mensuel de Base** : 10 000€ (généré par la holding)
-2. **Volatilité** : 10%
-3. **Taux de Croissance** : 2% mensuel
-4. **Capital Initial Filiale** : 0€
-5. **Capital Initial Holding** : 0€ (le capital vient des actionnaires)
-6. **Actionnaires** :
-   - Actionnaire 1 : Investissement 50 000€, Taux dividende 5% annuel
-   - Actionnaire 2 : Investissement 30 000€, Taux dividende 4% annuel
-7. **Politique de Reversement** : Par paliers
-   - Si bénéfice ≥ 10 000€ : reverser 2 000€
-   - Si bénéfice ≥ 20 000€ : reverser 5 000€
-8. **Durée** : 12 mois
-9. **Paramètres Fiscaux** : Valeurs par défaut (à vérifier)
-
-Cliquez sur "Simuler" pour générer les résultats et visualiser les graphiques.
-
-## Technologies Utilisées
-
-- **SvelteKit 5** : Framework avec routing et SSR
-- **Svelte 5** : Runes ($state, $derived, $effect) pour la réactivité
-- **TypeScript** : Typage strict
-- **Tailwind CSS** : Styling utilitaire
-- **Chart.js** : Graphiques interactifs
-- **html2pdf.js** : Génération de PDF
-- **Vitest** : Tests unitaires
-
-## Licence
-
-Ce POC est fourni à titre d'exemple et de démonstration. Les calculs fiscaux sont indicatifs et ne constituent pas un conseil fiscal.
-
-## Avertissements
-
-1. **Taux Fiscaux** : Les taux par défaut sont indicatifs. Vérifiez toujours les taux officiels avant utilisation réelle.
-2. **Conseil Fiscal** : Cet outil ne remplace pas un conseil fiscal professionnel.
-3. **Simulation** : Les résultats sont basés sur des modèles mathématiques et peuvent différer de la réalité.
-
-## Contribution
-
-Ce POC est un projet de démonstration. Pour toute amélioration ou correction, veuillez vérifier la cohérence fiscale avec les sources officielles.
 
 ---
 
-Développé avec SvelteKit 5 + TypeScript | Thème Monochrome | POC Holdify
+## Paramètres de Simulation
+
+### 1. Paramètres Financiers
+
+- **Profit mensuel de base** : Euros générés par la holding chaque mois
+- **Volatilité (%)** : Simule la variabilité (0–50%)
+- **Croissance mensuelle (%)** : Taux de croissance exponentielle mensuelle (0–10%)
+
+### 2. Capitaux
+
+- **Capital initial Filiale** : Fonds de départ de la filiale
+- **Capital initial Holding** : Fonds propres de la holding (hors actionnaires)
+- **Durée** : Nombre de mois à simuler (1–120)
+
+> *Note : L’investissement des actionnaires s’additionne automatiquement au capital holding.*
+
+### 3. Politiques de Reversement
+
+Quatre modes disponibles :
+- **Aucun** : Pas de reversement
+- **Pourcentage du capital holding** : Reversement d’un % chaque mois
+- **Conditionnel (seuil capital)** : Reversement d’un montant fixe quand seuil atteint
+- **Par paliers (sur bénéfice)** : Reversement selon des seuils de résultat net
+
+### 4. Actionnaires
+
+Pour chaque actionnaire :
+- **Nom**
+- **Investissement initial**
+- **Taux de dividende annuel (%)**
+
+> *Dividende calculé mensuellement sur le profit net post-IS, prorata du montant investi.*
+
+### 5. Fiscalité
+
+#### Impôt sur les Sociétés (IS)
+
+Barème progressif personnalisable (jusqu’à 3 tranches, voir `src/lib/simulator.ts`), par défaut :
+
+- Tranche 1 : 0 € — 15 %
+- Tranche 2 : 42 500 € — 25 %
+- Tranche 3 : 500 000 € — 28 %
+- Tranche 4 : 5 000 000 € — 31 %
+
+> *Adaptez les seuils/taux pour refléter la fiscalité en vigueur : voir [impots.gouv.fr](https://www.impots.gouv.fr/). Les PFU/IR/prélèvements sociaux ne sont pas réappliqués (dividende prélevé dans le résultat net).*
+
+---
+
+## Résultats de la Simulation
+
+### Graphiques générés (Chart.js)
+
+1. **Evolution des profits** : Profit brut vs. net holding
+2. **Dividendes & reversements** : Actionnaires, filiale
+3. **Evolution des capitaux** : Filiale vs. holding
+
+### Tableau détaillé mensuel
+
+Affiche : profit brut, IS payé, profit net, dividendes, reversement filiale, capital fin de période (holding & filiale)
+
+### Exports
+
+- **CSV** : Tableur, reporting, audit
+- **PDF** : Rapport professionnel incluant graphiques et tableaux
+
+---
+
+## Règles et Ajustements Fiscaux
+
+Tous les taux et barèmes sont <u>paramétrables</u> dans [`src/lib/simulator.ts`](src/lib/simulator.ts).
+Pour une conformité réelle, adaptez en fonction des textes légaux.
+
+Exemple :
+
+```typescript
+export const DEFAULT_IS_BRACKETS: TaxBracket[] = [
+  { threshold: 0, rate: 0.15 },       // PME
+  { threshold: 42500, rate: 0.25 },   // Intermédiaire
+  { threshold: 500000, rate: 0.28 },  // Standard
+  { threshold: 5000000, rate: 0.31 }  // Majoré
+];
+```
+
+Fonction de calcul IS : voir `calculateIS()`.
+
+---
+
+## Logique de Simulation
+
+1. **Génération d’un profit brut** (volatilité + croissance)
+2. **Calcul progressif IS**
+3. **Résultat net** = profit brut – IS
+4. **Versement dividendes actionnaires** (prorata investissements, taux annuel)
+5. **Reversement filiale** (politique sélectionnée)
+6. **Mise à jour capitaux** : filiale (ajout reversement), holding (profit net – dividendes – reversement)
+
+---
+
+## Tests Unitaires
+
+- Simulation IS (taux, seuils)
+- Dividendes actionnaires
+- Simulation globale (reversements, impacts, exports)
+- Exports CSV
+
+> *Tests : voir [`src/lib/simulator.test.ts`](src/lib/simulator.test.ts)*
+
+---
+
+## Qualité, Design & Accessibilité
+
+- **Design** : Monochrome, typographie sobre adaptée à tous formats
+- **Responsive** : Mobile, tablette, desktop
+- **Accessibilité** : Labels systématiques, navigation clavier, contraste conforme AA, structure sémantique
+
+---
+
+## Exemple d’Utilisation Professionnelle
+
+### Cas d'école sur 12 mois
+
+| Paramètre | Valeur Exemple |
+|-----------|---------------|
+| Profit mensuel | 10 000 € |
+| Volatilité | 10 % |
+| Croissance mensuelle | 2 % |
+| Capital initial filiale | 0 € |
+| Capital initial holding | 0 € |
+| Actionnaires | 1: 50k€ @ 5% / 2: 30k€ @ 4% |
+| Politique reversement | Paliers (≥ 10k€ : 2k€, ≥ 20k€ : 5k€) |
+| Durée simulation | 12 mois |
+| Barèmes fiscaux | Par défaut |
+
+—> Lancez la simulation, consultez tableaux/graphes, exportez vos résultats.
+
+---
+
+## Technologies
+
+- **SvelteKit 5** (routage, SSR, typage fort)
+- **Svelte 5** (runic/reactivité moderne)
+- **TypeScript** (robustesse, lisibilité)
+- **Tailwind CSS** (thème sobre, responsive)
+- **Chart.js** (analyse graphique)
+- **Vitest** (tests unitaires)
+- **html2pdf.js** (export PDF)
+
+---
+
+## Licence & Avertissements
+
+Ce projet est un POC à finalité pédagogique et technique. Il ne constitue ni un conseil juridique ni fiscal. **Vérifiez systématiquement les barèmes fiscaux officiels.**
+
+- **Taux par défaut à adapter**
+- **Simulation indicative**
+- **Aucune responsabilité fiscale ou juridique**
+
+---
+
+## Contribution
+
+Pour toute suggestion/bug, ouvrez une issue ou une PR. Merci de valider les cohérences fiscales avec les sources officielles.
+
+---
+
+<p align="center">
+  <strong>Développé avec SvelteKit 5 + TypeScript | Design Monochrome | © Holdify - 2024</strong>
+</p>
+
