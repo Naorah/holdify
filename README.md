@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="src/lib/assets/H_white.png" alt="Holdify Logo" width="120" height="120" style="filter: invert(1) brightness(10);">
+  <img src="src/lib/assets/favicon_white.png" alt="Holdify Logo" width="120" height="120" style="filter: invert(1) brightness(10);">
 </p>
 
 <h1 align="center">Holdify</h1>
