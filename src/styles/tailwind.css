@@ -1,0 +1,122 @@
+/**
+ * Fichier de styles Tailwind CSS pour le POC Holdify
+ * Thème monochrome noir et blanc - Design moderne et professionnel
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Styles de base pour l'accessibilité */
+@layer base {
+	body {
+		@apply bg-white text-black antialiased;
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+	}
+
+	/* Focus visible pour l'accessibilité */
+	*:focus-visible {
+		@apply outline-2 outline-offset-2 outline-black;
+	}
+}
+
+/* Styles pour les range inputs (sliders) uniquement */
+@layer components {
+	input[type="range"] {
+		-webkit-appearance: none;
+		appearance: none;
+		width: 100%;
+		height: 10px;
+		background: #e5e5e5;
+		border-radius: 5px;
+		outline: none;
+		cursor: pointer;
+		position: relative;
+		border: 1px solid #d0d0d0;
+	}
+
+	/* Barre de progression WebKit (Chrome, Safari, Edge) */
+	input[type="range"]::-webkit-slider-runnable-track {
+		width: 100%;
+		height: 10px;
+		background: #e5e5e5;
+		border-radius: 5px;
+		border: 1px solid #d0d0d0;
+	}
+
+	/* Curseur WebKit (Chrome, Safari, Edge) */
+	input[type="range"]::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		appearance: none;
+		background: #000000;
+		height: 22px;
+		width: 22px;
+		border-radius: 50%;
+		border: 3px solid #ffffff;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+		margin-top: -7px;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		position: relative;
+		z-index: 1;
+	}
+
+	input[type="range"]::-webkit-slider-thumb:hover {
+		background: #333333;
+		transform: scale(1.2);
+		box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+	}
+
+	input[type="range"]::-webkit-slider-thumb:active {
+		background: #000000;
+		transform: scale(1.1);
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+	}
+
+	/* Barre de progression Firefox */
+	input[type="range"]::-moz-range-track {
+		width: 100%;
+		height: 10px;
+		background: #e5e5e5;
+		border-radius: 5px;
+		border: 1px solid #d0d0d0;
+	}
+
+	/* Curseur Firefox */
+	input[type="range"]::-moz-range-thumb {
+		background: #000000;
+		height: 22px;
+		width: 22px;
+		border: 3px solid #ffffff;
+		border-radius: 50%;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	input[type="range"]::-moz-range-thumb:hover {
+		background: #333333;
+		transform: scale(1.2);
+		box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+	}
+
+	input[type="range"]::-moz-range-thumb:active {
+		background: #000000;
+		transform: scale(1.1);
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+	}
+
+	/* Supprimer le focus par défaut et ajouter un style personnalisé */
+	input[type="range"]:focus {
+		outline: none;
+	}
+
+	input[type="range"]:focus::-webkit-slider-thumb {
+		box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.3);
+	}
+
+	input[type="range"]:focus::-moz-range-thumb {
+		box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.3);
+	}
+}
+
