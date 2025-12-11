@@ -280,6 +280,6 @@ Pour toute suggestion/bug, ouvrez une issue ou une PR. Merci de valider les coh�
 ---
 
 <p align="center">
-  <strong>Développé avec SvelteKit 5 + TypeScript | Design Monochrome | © Holdify - 2024</strong>
+  <strong>Développé avec SvelteKit 5 + TypeScript | Design Monochrome | © Holdify - 2025</strong>
 </p>
 
