@@ -51,7 +51,7 @@ async function convertAllCanvasesToImages(element: HTMLElement): Promise<Map<num
 const PDF_STYLES = `
 	.pdf-content * { margin: 0; padding: 0; box-sizing: border-box; }
 	.pdf-content { font-family: Arial, sans-serif; font-size: 9px; background: white; }
-	.pdf-content h1 { font-size: 16px; margin-bottom: 4px; border-bottom: 2px solid black; padding-bottom: 2px; }
+	.pdf-content h1 { font-size: 16px; margin-bottom: 4px; border-bottom: 2px solid black; padding-bottom: 8px; }
 	.pdf-content h2 { font-size: 13px; margin: 6px 0 3px 0; border-bottom: 1px solid #ccc; padding-bottom: 2px; }
 	.pdf-content .section { margin-bottom: 8px; padding: 5px; border: 1px solid #ddd; }
 	.pdf-content .param-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3px; margin-bottom: 4px; }
@@ -61,10 +61,28 @@ const PDF_STYLES = `
 	.pdf-content .chart-container { width: 100%; margin: 10px 0; height: 240px; display: flex; align-items: center; justify-content: center; }
 	.pdf-content .chart-container img { max-width: 100%; max-height: 240px; width: auto; height: auto; display: block; object-fit: contain; }
 	.pdf-content .chart-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-	.pdf-content table { width: 100%; border-collapse: collapse; font-size: 7px; margin: 4px 0; }
-	.pdf-content th, .pdf-content td { padding: 2px 1px; text-align: right; border: 1px solid #ccc; line-height: 1.1; }
-	.pdf-content th { background: #f0f0f0; font-weight: bold; text-align: center; }
+	.pdf-content table { width: 100%; border-collapse: collapse; font-size: 7px; margin: 4px 0; border-spacing: 0; }
+	.pdf-content th, .pdf-content td { 
+		padding: 6px 4px; 
+		text-align: right; 
+		border: 1px solid #333; 
+		line-height: 1.5; 
+		vertical-align: middle; 
+		word-wrap: break-word;
+		box-sizing: border-box;
+		min-height: 20px;
+	}
+	.pdf-content th { 
+		background: #f0f0f0; 
+		font-weight: bold; 
+		text-align: center; 
+		padding: 6px 4px; 
+		vertical-align: middle;
+	}
 	.pdf-content td:first-child, .pdf-content th:first-child { text-align: left; }
+	.pdf-content tr { height: auto; display: table-row; }
+	.pdf-content tbody tr { display: table-row; }
+	.pdf-content thead tr { display: table-row; }
 	.pdf-content tr:nth-child(even) { background: #f9f9f9; }
 `;
 
@@ -187,27 +205,36 @@ function buildTablePageHTML(results: MonthlyResult[]): string {
 		<table>
 			<thead>
 				<tr>
-					<th>Mois</th>
-					<th>Recettes H</th>
-					<th>Charges H</th>
-					<th>Résultat H</th>
-					<th>Recettes F</th>
-					<th>Charges F</th>
-					<th>Résultat F</th>
+					<th rowspan="2">Mois</th>
+					<th colspan="3">Holding</th>
+					<th colspan="3">Filiale</th>
+					<th colspan="4">Résultats</th>
+					<th colspan="2">Capitaux</th>
+				</tr>
+				<tr>
+					<th>Recette</th>
+					<th>Charges</th>
+					<th>Résultat</th>
+					<th>Recette</th>
+					<th>Charges</th>
+					<th>Résultat</th>
 					<th>Bénéfice</th>
 					<th>IS</th>
-					<th>Divid. Bénéf.</th>
-					<th>Divid. Action.</th>
-					<th>Capital F</th>
-					<th>Capital H</th>
+					<th>Dividende Bénéf.</th>
+					<th>Dividendes Act.</th>
+					<th>Filiale</th>
+					<th>Holding</th>
 				</tr>
 			</thead>
 			<tbody>
 				${results.map(r => {
-					const format = (val: number) => new Intl.NumberFormat('fr-FR', { 
-						minimumFractionDigits: 0, 
-						maximumFractionDigits: 0 
-					}).format(val);
+					const format = (val: number) => {
+						// Format standard avec séparateur de milliers
+						return new Intl.NumberFormat('fr-FR', { 
+							minimumFractionDigits: 0, 
+							maximumFractionDigits: 0 
+						}).format(Math.round(val));
+					};
 					return `
 					<tr>
 						<td>${r.month}</td>
@@ -301,7 +328,56 @@ async function captureSectionToCanvas(
 			scrollY: 0,
 			x: 0,
 			y: 0,
-			logging: false
+			logging: false,
+			onclone: (clonedDoc: Document) => {
+				// S'assurer que tous les tableaux sont visibles et bien formatés
+				const tables = clonedDoc.querySelectorAll('table');
+				tables.forEach((table) => {
+					const tableEl = table as HTMLElement;
+					tableEl.style.display = 'table';
+					tableEl.style.visibility = 'visible';
+					tableEl.style.opacity = '1';
+					tableEl.style.width = '100%';
+					tableEl.style.borderCollapse = 'collapse';
+					tableEl.style.borderSpacing = '0';
+					
+					// S'assurer que toutes les lignes sont visibles
+					const rows = tableEl.querySelectorAll('tr');
+					rows.forEach((row) => {
+						const rowEl = row as HTMLElement;
+						rowEl.style.display = 'table-row';
+						rowEl.style.visibility = 'visible';
+						rowEl.style.opacity = '1';
+					});
+					
+					// S'assurer que toutes les cellules sont visibles et bien alignées
+					const cells = tableEl.querySelectorAll('th, td');
+					cells.forEach((cell) => {
+						const cellEl = cell as HTMLElement;
+						cellEl.style.display = 'table-cell';
+						cellEl.style.visibility = 'visible';
+						cellEl.style.opacity = '1';
+						cellEl.style.verticalAlign = 'middle';
+						cellEl.style.boxSizing = 'border-box';
+						cellEl.style.padding = '6px 4px';
+						cellEl.style.border = '1px solid #333';
+						cellEl.style.lineHeight = '1.5';
+						cellEl.style.minHeight = '20px';
+						if (cell.tagName === 'TH') {
+							cellEl.style.padding = '7px 4px';
+							cellEl.style.textAlign = 'center';
+							cellEl.style.fontWeight = 'bold';
+							cellEl.style.backgroundColor = '#f0f0f0';
+						} else {
+							cellEl.style.textAlign = 'right';
+						}
+						// Première colonne alignée à gauche
+						if (cell.previousElementSibling === null) {
+							cellEl.style.textAlign = 'left';
+						}
+					});
+				});
+			}
 		});
 		
 		return canvas;
@@ -383,10 +459,11 @@ export async function exportToPDF(
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		z-index: 10000;
+		z-index: 99999;
 		color: white;
 		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 		backdrop-filter: blur(4px);
+		pointer-events: auto;
 	`;
 	
 	loadingOverlay.innerHTML = `
@@ -418,8 +495,8 @@ export async function exportToPDF(
 		
 		console.log(`[PDF] Données: ${finalResults.length} résultats, ${Object.keys(finalFormData).length} paramètres`);
 		
-		// Retirer temporairement l'overlay pour permettre la capture
-		loadingOverlay.style.display = 'none';
+		// Garder l'overlay visible pendant toute la génération
+		// Ne pas le masquer pour permettre la capture
 		
 		// Importer html2canvas et jsPDF directement
 		const html2canvas = (await import('html2canvas')).default;
@@ -462,7 +539,9 @@ export async function exportToPDF(
 			console.log(`[PDF] Génération page 3: Détail Mensuel...`);
 			pdf.addPage();
 			const tableHTML = buildTablePageHTML(finalResults);
-			const tableCanvas = await captureSectionToCanvas(tableHTML, html2canvas, containerWidth);
+			// Utiliser une largeur réduite pour le tableau pour éviter le débordement
+			const tableContainerWidth = 800;
+			const tableCanvas = await captureSectionToCanvas(tableHTML, html2canvas, tableContainerWidth);
 			addCanvasToPDFPage(pdf, tableCanvas, margin, contentWidth, contentHeight);
 		}
 		
@@ -472,9 +551,10 @@ export async function exportToPDF(
 		
 		console.log(`[PDF] PDF généré avec succès: ${pdfFilename}`);
 		
-		// Réafficher l'overlay brièvement avant de le retirer
-		loadingOverlay.style.display = 'flex';
-		await new Promise(resolve => setTimeout(resolve, 100));
+		// Attendre que le téléchargement soit complètement terminé avant de retirer l'overlay
+		// Le save() déclenche le téléchargement de manière synchrone mais le téléchargement peut prendre du temps
+		// On attend suffisamment longtemps pour que le téléchargement soit terminé
+		await new Promise(resolve => setTimeout(resolve, 1500));
 	} catch (error) {
 		console.error('Erreur lors de la génération du PDF:', error);
 		throw error;
