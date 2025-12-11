@@ -4,7 +4,7 @@
 -->
 
 <script lang="ts">
-	import favicon from '$lib/assets/favicon.svg';
+	import favicon from '$lib/assets/favicon_white.png';
 	import '../styles/tailwind.css';
 
 	let { children } = $props();
