@@ -12,7 +12,17 @@ export default defineConfig(({ mode }) => {
 			globals: true
 		},
 		optimizeDeps: {
-			include: ['html2pdf.js']
+			include: ['html2pdf.js', 'html2canvas', 'jspdf']
+		},
+		build: {
+			rollupOptions: {
+				output: {
+					manualChunks: undefined
+				}
+			}
+		},
+		ssr: {
+			external: ['html2canvas', 'jspdf']
 		}
 	};
 });

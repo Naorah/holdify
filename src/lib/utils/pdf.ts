@@ -6,6 +6,7 @@
 
 import type { MonthlyResult } from '../types/simulation.types';
 import { formatCurrency } from './formatters';
+import { loadHtml2Canvas, loadJsPDF } from './pdf-libs';
 
 /**
  * Convertit un canvas Chart.js en image base64
@@ -498,10 +499,9 @@ export async function exportToPDF(
 		// Garder l'overlay visible pendant toute la génération
 		// Ne pas le masquer pour permettre la capture
 		
-		// Importer html2canvas et jsPDF directement
-		const html2canvas = (await import('html2canvas')).default;
-		const jsPDFModule = await import('jspdf');
-		const { jsPDF } = jsPDFModule;
+		// Charger les modules PDF
+		const html2canvas = await loadHtml2Canvas();
+		const jsPDF = await loadJsPDF();
 		
 		// Créer le PDF
 		const pdf = new jsPDF({
