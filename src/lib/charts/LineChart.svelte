@@ -57,10 +57,10 @@
 	// Instance Chart.js (état interne)
 	let chartInstance: Chart | null = $state(null);
 
-	// Configuration du graphique avec thème monochrome
+	// Configuration du graphique avec couleurs
 	const getChartConfig = (): ChartConfiguration<'line'> => {
-		// Couleurs par défaut pour le thème noir/blanc
-		const defaultColors = ['#000000', '#666666', '#333333', '#999999'];
+		// Couleurs par défaut pour différencier les courbes
+		const defaultColors = ['#2563eb', '#dc2626', '#16a34a', '#ca8a04', '#9333ea', '#0891b2', '#ea580c', '#be185d'];
 
 		return {
 			type: 'line',
@@ -157,7 +157,7 @@
 
 		instance.data.labels = labels.map(String);
 		instance.data.datasets = datasets.map((dataset, index) => {
-			const defaultColors = ['#000000', '#666666', '#333333', '#999999'];
+			const defaultColors = ['#2563eb', '#dc2626', '#16a34a', '#ca8a04', '#9333ea', '#0891b2', '#ea580c', '#be185d'];
 			return {
 				label: dataset.label,
 				data: dataset.data,

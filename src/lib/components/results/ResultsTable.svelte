@@ -30,7 +30,7 @@
 
 	<div class="overflow-x-auto -mx-4 sm:mx-0 lg:-mx-2">
 		<div class="inline-block min-w-full align-middle">
-			<table class="min-w-full border-collapse">
+			<table class="min-w-full border-collapse pdf-table">
 				<thead>
 					<tr class="border-b-2 border-black">
 						<th class="text-left p-3 sm:p-4 font-semibold text-sm sm:text-base bg-gray-100 border-r-2 border-gray-400">Mois</th>

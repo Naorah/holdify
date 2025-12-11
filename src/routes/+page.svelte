@@ -50,6 +50,8 @@
 	let volatility = $state(formStore.volatility);
 	let monthlyGrowthRate = $state(formStore.monthlyGrowthRate);
 	let dividendOnProfitRatio = $state(formStore.dividendOnProfitRatio);
+	let useCapitalBasedRevenue = $state(formStore.useCapitalBasedRevenue);
+	let capitalRevenueRate = $state(formStore.capitalRevenueRate);
 	
 	// Capitaux
 	let initialSubsidiaryCapital = $state(formStore.initialSubsidiaryCapital);
@@ -121,7 +123,9 @@
 				dividendSocialRate
 			},
 			shareholders: shareholders.filter(sh => sh.name.trim() !== '' && sh.investment > 0),
-			dividendOnProfitRatio
+			dividendOnProfitRatio,
+			useCapitalBasedRevenue,
+			capitalRevenueRate
 		};
 
 		const results = runSimulation(params);
@@ -130,20 +134,52 @@
 		simulationStore.setResults(results);
 	}
 
+	// État pour gérer le chargement du PDF
+	let isGeneratingPDF = $state(false);
+
 	/**
 	 * Exporte la page en PDF
 	 */
 	async function handleExportPDF() {
-		if (!browser || !hasRunSimulation) return;
+		if (!browser || !hasRunSimulation || isGeneratingPDF) return;
 
-		const element = document.querySelector('.min-h-screen') as HTMLElement;
+		// Sélectionner uniquement le main (sans Header ni Footer)
+		const element = document.querySelector('main') as HTMLElement;
 		if (!element) return;
 
+		isGeneratingPDF = true;
+
 		try {
-			await exportToPDF(element, 'simulation_holdify');
+			// Préparer les données du formulaire
+			const formData = {
+				baseMonthlyRevenueHolding,
+				baseMonthlyRevenueSubsidiary,
+				baseMonthlyChargesHolding,
+				baseMonthlyChargesSubsidiary,
+				initialSubsidiaryCapital,
+				durationMonths,
+				volatility,
+				monthlyGrowthRate,
+				dividendOnProfitRatio,
+				useCapitalBasedRevenue,
+				capitalRevenueRate,
+				shareholders: shareholders.filter(sh => sh.name.trim() !== '' && sh.investment > 0),
+				isBracket1Threshold,
+				isBracket1Rate,
+				isBracket2Threshold,
+				isBracket2Rate,
+				isBracket3Threshold,
+				isBracket3Rate,
+				dividendIrRate,
+				dividendSocialRate
+			};
+
+			await exportToPDF(element, 'simulation_holdify', formData, simulationResults);
 		} catch (error) {
 			console.error('Erreur lors de la génération du PDF:', error);
 			alert('Une erreur est survenue lors de la génération du PDF.');
+		} finally {
+			isGeneratingPDF = false;
 		}
 	}
 
@@ -249,6 +285,8 @@
 					bind:volatility
 					bind:monthlyGrowthRate
 					bind:dividendOnProfitRatio
+					bind:useCapitalBasedRevenue
+					bind:capitalRevenueRate
 				/>
 
 				<!-- Capitaux -->
@@ -292,8 +330,9 @@
 							type="button"
 							class="px-8 py-3 text-lg font-semibold transition-all duration-300 border-2 border-black bg-white text-black hover:bg-black hover:text-white hover:shadow-lg active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:opacity-50 disabled:cursor-not-allowed rounded-lg w-full sm:w-auto"
 							onclick={handleExportPDF}
+							disabled={isGeneratingPDF}
 						>
-							Télécharger en PDF
+							{isGeneratingPDF ? 'Génération...' : 'Télécharger en PDF'}
 						</button>
 					{/if}
 				</div>

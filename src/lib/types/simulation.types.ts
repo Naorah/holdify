@@ -114,6 +114,10 @@ export interface SimulationParameters {
 	shareholders: Shareholder[];
 	/** Ratio de dividende sur bénéfice (en décimal, ex: 0.05 pour 5%) */
 	dividendOnProfitRatio: number;
+	/** Activer le calcul des recettes de la holding basé sur le capital */
+	useCapitalBasedRevenue: boolean;
+	/** Pourcentage mensuel de recette basé sur le capital de la holding (en décimal, ex: 0.01 pour 1%) */
+	capitalRevenueRate: number;
 }
 
 /**

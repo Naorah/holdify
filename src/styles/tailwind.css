@@ -120,3 +120,40 @@
 	}
 }
 
+/* Styles spécifiques pour l'export PDF */
+@layer utilities {
+	@media print {
+		* {
+			-webkit-print-color-adjust: exact !important;
+			print-color-adjust: exact !important;
+		}
+		
+		.chart-container {
+			page-break-inside: avoid !important;
+			break-inside: avoid !important;
+		}
+		
+		section {
+			page-break-inside: avoid !important;
+			break-inside: avoid !important;
+		}
+		
+		table {
+			page-break-inside: auto !important;
+		}
+		
+		tr {
+			page-break-inside: avoid !important;
+			break-inside: avoid !important;
+		}
+		
+		thead {
+			display: table-header-group !important;
+		}
+		
+		tfoot {
+			display: table-footer-group !important;
+		}
+	}
+}
+

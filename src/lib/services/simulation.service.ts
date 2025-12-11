@@ -214,12 +214,26 @@ export function runSimulation(params: SimulationParameters): MonthlyResult[] {
 
 	for (let month = 1; month <= params.durationMonths; month++) {
 		// 1. Génération des recettes et charges pour la holding
-		const revenueHolding = generateMonthlyValue(
-			params.baseMonthlyRevenueHolding,
-			params.volatility,
-			params.monthlyGrowthRate,
-			month
-		);
+		let revenueHolding: number;
+		if (params.useCapitalBasedRevenue) {
+			// Calcul des recettes basé sur le capital actuel de la holding
+			const capitalBasedRevenue = holdingCapital * params.capitalRevenueRate;
+			// Appliquer volatilité et croissance
+			revenueHolding = generateMonthlyValue(
+				capitalBasedRevenue,
+				params.volatility,
+				params.monthlyGrowthRate,
+				month
+			);
+		} else {
+			// Calcul classique avec valeur de base
+			revenueHolding = generateMonthlyValue(
+				params.baseMonthlyRevenueHolding,
+				params.volatility,
+				params.monthlyGrowthRate,
+				month
+			);
+		}
 		const chargesHolding = generateMonthlyValue(
 			params.baseMonthlyChargesHolding,
 			params.volatility,

@@ -39,6 +39,10 @@ export class FormStore {
 	
 	// Ratio de dividende sur bénéfice
 	dividendOnProfitRatio = 0.05; // 5%
+	
+	// Calcul des recettes basé sur le capital
+	useCapitalBasedRevenue = false;
+	capitalRevenueRate = 0.01; // 1% mensuel
 
 	// Politique de reversement
 	reversalPolicyType: 'none' | 'pct_of_holding' | 'conditional' | 'tiered' = 'none';
@@ -121,7 +125,9 @@ export class FormStore {
 			durationMonths: this.durationMonths,
 			taxParams: this.getTaxParams(),
 			shareholders: this.shareholders.filter(sh => sh.name.trim() !== '' && sh.investment > 0),
-			dividendOnProfitRatio: this.dividendOnProfitRatio
+			dividendOnProfitRatio: this.dividendOnProfitRatio,
+			useCapitalBasedRevenue: this.useCapitalBasedRevenue,
+			capitalRevenueRate: this.capitalRevenueRate
 		};
 	}
 
