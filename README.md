@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://holdify.app/logo.svg" alt="Holdify logo" width="120" height="120">
+  <img src="frontend/src/lib/assets/favicon.svg" alt="Zest & Velvet Logo"  alt="Holdify logo" width="120" height="120">
 </p>
 
 <h1 align="center">Holdify</h1>
