@@ -3,7 +3,7 @@
 -->
 
 <script lang="ts">
-	import logoH from '$lib/assets/favicon_white.png';
+	import logoH from '$lib/assets/favicon_black.png';
 </script>
 
 <header class="border-b-2 border-black bg-white shadow-md sticky top-0 z-50 backdrop-blur-sm bg-opacity-95">
